@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { createServer as createViteServer } from "vite";
 import Database from "better-sqlite3";
 import path from "path";
@@ -8,6 +9,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const db = new Database("unigest_v2.db");
+
+// Test database connection and writeability
+try {
+  db.prepare("CREATE TABLE IF NOT EXISTS _connection_test (id INTEGER PRIMARY KEY)").run();
+  db.prepare("INSERT INTO _connection_test DEFAULT VALUES").run();
+  db.prepare("DROP TABLE _connection_test").run();
+  console.log("Database connection and write test successful");
+} catch (err) {
+  console.error("Database connection or write test failed:", err);
+}
 
 // Initialize Database Tables
 db.exec(`
@@ -127,9 +138,13 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
+  app.use(cors());
   app.use(express.json({ limit: '50mb' }));
 
   // API Routes
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", database: "connected" });
+  });
   
   // Get all associations (for dashboard count)
   app.get("/api/associations", (req, res) => {

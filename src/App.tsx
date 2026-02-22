@@ -280,9 +280,9 @@ function CreateView({ onSuccess, onCancel }: any) {
       } else {
         alert("Erro: " + (data.error || "Não foi possível criar a associação"));
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Fetch error:", err);
-      alert("Erro de conexão ao criar associação");
+      alert(`Erro de conexão ao criar associação. Por favor, verifique se o servidor está rodando. Detalhes: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -386,9 +386,9 @@ function LoginView({ onSuccess, onCancel }: any) {
       } else {
         alert("Erro: " + (data.error || "Credenciais inválidas"));
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Login fetch error:", err);
-      alert("Erro de conexão ao entrar");
+      alert(`Erro de conexão ao entrar. Detalhes: ${err.message}`);
     } finally {
       setLoading(false);
     }
