@@ -132,7 +132,7 @@ export default function App() {
             onClick={() => setView("landing")}
           >
             <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold">G</div>
-            <span className="text-xl font-bold text-white tracking-tight">Giro Escola <span className="text-emerald-500">Angola</span></span>
+            <span className="text-xl font-bold text-white tracking-tight">Giro <span className="text-emerald-500">Escola</span></span>
           </div>
           
           <div className="flex items-center gap-4">
